@@ -84,12 +84,16 @@ class Stopwatch:
         if self.is_running:
             self.seconds += 1
             hours = self.seconds // 3600
-            minutes = self.seconds // 60
-            seconds = self.seconds % 60
+            remaining_seconds = self.seconds % 3600
+            minutes = remaining_seconds // 60
+            seconds = remaining_seconds % 60
             self.time_string = f'{hours:02d}:{minutes:02d}:{seconds:02d}'
             self.time_label.config(text=self.time_string)
             self.master.update()
             self.master.after(1000, self.update_time)
+            if minutes == 0 and seconds == 0:
+                self.seconds = hours * 3600  
+
     
 
     def select_item(self):
